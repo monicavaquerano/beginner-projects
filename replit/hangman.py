@@ -1,7 +1,24 @@
-import random, os, time
+import random, os, time, requests
 
-HANGMANPICS = [
-    """
+
+listOfWords = ["british", "suave", "integrity", "accent", "evil", "genius", "Downton"]
+
+response = requests.get("https://random-word-api.herokuapp.com/word")
+
+if response.status_code == 200:
+    data = response.json()
+    myWord = data[0].strip().lower()
+else:
+    myWord = random.choice(listOfWords).strip().lower()
+
+tries = []
+counter = 0
+lives = 6
+
+
+def printDummy(counter):
+    HANGMANPICS = [
+        """
   +---+
   |   |
       |
@@ -9,7 +26,7 @@ HANGMANPICS = [
       |
       |
 =========""",
-    """
+        """
   +---+
   |   |
   O   |
@@ -17,7 +34,7 @@ HANGMANPICS = [
       |
       |
 =========""",
-    """
+        """
   +---+
   |   |
   O   |
@@ -25,7 +42,7 @@ HANGMANPICS = [
       |
       |
 =========""",
-    """
+        """
   +---+
   |   |
   O   |
@@ -33,7 +50,7 @@ HANGMANPICS = [
       |
       |
 =========""",
-    """
+        """
   +---+
   |   |
   O   |
@@ -41,7 +58,7 @@ HANGMANPICS = [
       |
       |
 =========""",
-    """
+        """
   +---+
   |   |
   O   |
@@ -49,7 +66,7 @@ HANGMANPICS = [
  /    |
       |
 =========""",
-    """
+        """
   +---+
   |   |
   O   |
@@ -57,24 +74,14 @@ HANGMANPICS = [
  / \  |
       |
 =========""",
-]
-listOfWords = ["british", "suave", "integrity", "accent", "evil", "genius", "Downton"]
-
-myWord = random.choice(listOfWords).strip().lower()
-tries = []
-counter = 0
-lives = 6
-
-
-def printDummy(counter):
+    ]
     print(HANGMANPICS[counter])
 
 
-title = "🌟Hangman🌟"
+title = "🌟 Hangman 🌟"
 
 while True:
     os.system("clear")
-    # print(myWord)
     print(title)
     printDummy(counter)
     all = True
@@ -98,22 +105,17 @@ while True:
     guess = input("\nChoose a letter:\n > ").strip().lower()
 
     if guess in tries:
-        print(f"\nYou already tried '{guess}'")
+        print(f"You already tried '{guess}'")
         time.sleep(2)
         continue
 
     tries.append(guess)
 
     if guess in myWord:
-        print("\nCorrect!")
+        print("Correct!")
     else:
         counter += 1
         lives -= 1
-        print("\nNope, not in there.")
+        print("Nope, not in there.")
 
     time.sleep(2)
-
-
-# i = myList.index(item)
-# newItem = input("What should it be?: ").lower().strip()
-# myList[i] = newItem
