@@ -40,128 +40,130 @@ import os, random, time
 
 cards = {
     "alice": {
-        "lesbianisim": 50,
+        "lesbianism": 50,
         "toxicity": 75,
         "crazyness": 75,
-        "slutness": 50,
+        "playerness": 50,
     },
     "bette": {
-        "lesbianisim": 100,
+        "lesbianism": 100,
         "toxicity": 60,
         "crazyness": 50,
-        "slutness": 60,
+        "playerness": 80,
     },
     "carmen": {
-        "lesbianisim": 95,
+        "lesbianism": 95,
         "toxicity": 85,
         "crazyness": 75,
-        "slutness": 75,
+        "playerness": 80,
     },
     "dana": {
-        "lesbianisim": 100,
+        "lesbianism": 100,
         "toxicity": 60,
         "crazyness": 60,
-        "slutness": 60,
+        "playerness": 60,
     },
     "dylan": {
-        "lesbianisim": random.randint(0, 75),
+        "lesbianism": random.randint(0, 75),
         "toxicity": random.randint(0, 75),
         "crazyness": random.randint(0, 75),
-        "slutness": random.randint(0, 75),
+        "playerness": random.randint(0, 75),
     },
     "helena": {
-        "lesbianisim": 100,
+        "lesbianism": 100,
         "toxicity": 95,
         "crazyness": 85,
-        "slutness": 85,
+        "playerness": 85,
     },
     "kit": {
-        "lesbianisim": 0,
+        "lesbianism": 0,
         "toxicity": 50,
         "crazyness": 60,
-        "slutness": 50,
+        "playerness": 75,
     },
     "jenny": {
-        "lesbianisim": 75,
+        "lesbianism": 75,
         "toxicity": 100,
         "crazyness": 100,
-        "slutness": 95,
+        "playerness": 55,
     },
     "jodi": {
-        "lesbianisim": random.randint(0, 75),
+        "lesbianism": random.randint(0, 75),
         "toxicity": random.randint(0, 75),
         "crazyness": random.randint(0, 75),
-        "slutness": random.randint(0, 75),
+        "playerness": random.randint(0, 75),
     },
     "lara": {
-        "lesbianisim": random.randint(0, 75),
+        "lesbianism": random.randint(0, 75),
         "toxicity": random.randint(0, 75),
         "crazyness": random.randint(0, 75),
-        "slutness": random.randint(0, 75),
+        "playerness": random.randint(0, 75),
     },
     "marina": {
-        "lesbianisim": 75,
+        "lesbianism": 75,
         "toxicity": 90,
         "crazyness": 80,
-        "slutness": 80,
+        "playerness": 85,
     },
     "papi": {
-        "lesbianisim": random.randint(0, 75),
+        "lesbianism": random.randint(0, 75),
         "toxicity": random.randint(0, 75),
         "crazyness": random.randint(0, 75),
-        "slutness": random.randint(0, 75),
+        "playerness": random.randint(0, 75),
     },
     "shane": {
-        "lesbianisim": 100,
+        "lesbianism": 100,
         "toxicity": 40,
         "crazyness": 75,
-        "slutness": 100,
+        "playerness": 100,
     },
     "tasha": {
-        "lesbianisim": random.randint(0, 75),
+        "lesbianism": random.randint(0, 75),
         "toxicity": random.randint(0, 75),
         "crazyness": random.randint(0, 75),
-        "slutness": random.randint(0, 75),
+        "playerness": random.randint(0, 75),
     },
     "tina": {
-        "lesbianisim": 60,
+        "lesbianism": 60,
         "toxicity": 40,
         "crazyness": 40,
-        "slutness": 60,
+        "playerness": 75,
     },
 }
 
-listOfCards = list(cards.items())
-
-listOfStats = list(listOfCards[0][1])
-
 
 def addCard():
-    name = input("What's her name?: ").strip().lower()
-    try:
-        lesbianism = int(input("What's her lesbianism stat?: "))
-        toxicity = int(input("What's her toxicity stat?: "))
-        crazyness = int(input("What's her crazyness stat?: "))
-        slutness = int(input("What's her slutness stat?: "))
-    except ValueError:
-        print("\nStats must be numbers.")
-        addCard()
+    while True:
+        try:
+            name = input("What's her name?: ").strip().lower()
+            lesbianism = int(input("What's her lesbianism stat?: "))
+            toxicity = int(input("What's her toxicity stat?: "))
+            crazyness = int(input("What's her crazyness stat?: "))
+            playerness = int(input("What's her playerness stat?: "))
+            break
+        except ValueError:
+            print("\nStats must be numbers.\n")
+            continue
+        except UnboundLocalError:
+            print("\nYou must enter a number.\n")
+            continue
 
     if name not in cards:
         cards[name] = {
             "lesbianism": lesbianism,
             "toxicity": toxicity,
             "crazyness": crazyness,
-            "slutness": slutness,
+            "playerness": playerness,
         }
+        print("\nNew card was added successfully!")
     else:
-        print("This character already exist on the list.")
+        print("\nThis character already exist on the list.")
 
 
 def printCards():
     i = 1
     for key in cards.keys():
-        print(f"{i}: {key.capitalize()}", end="  ")
+        print(f"{i:>2}: {key.capitalize()}")
         i += 1
     print()
 
@@ -179,85 +181,131 @@ def fight(c1: int, c2: int, s: int):
     card2 = listOfCards[c2][0]
     stat = listOfStats[s]
 
-    print(f"{card1} vs {card2}")
-    print(stat)
+    os.system("clear")
+
+    print(f"========== Ultimate Match ==========")
+    print(f"\n******** {card1.capitalize()} vs {card2.capitalize()} ********")
+    print(f"********* on {stat} *********\n")
 
     c1Stat = cards[card1][stat]
     c2Stat = cards[card2][stat]
 
-    print(f"{card1.capitalize()} has a {stat} of {c1Stat}")
-    print(f"{card2.capitalize()} has a {stat} of {c2Stat}")
+    time.sleep(1)
+
+    print(f"> {card1.capitalize()} has a {stat} of: {c1Stat:>3}")
+    print(f"> {card2.capitalize()} has a {stat} of: {c2Stat:>3}")
+
+    time.sleep(1)
 
     if c1Stat > c2Stat:
-        print(f"{card1.capitalize()} wins!")
+        print(f"\n******** {card1.capitalize()} wins! ********\n")
         return 1
     elif c1Stat < c2Stat:
-        print(f"{card2.capitalize()} wins!")
+        print(f"\n******** {card2.capitalize()} wins! ********\n")
         return 2
     else:
-        print(f"It's a tie!")
+        print(f"\n******** It's a tie! ********\n")
         return 0
 
 
-# title = "🌟 Top Trumps 🌟"
-# text = "Welcome to the Top Trumps 'Craziest Character in The L Word' Simulator"
-# menu = "1: Fight!\n2: Add a Card Character\n"
-# print(menu)
-# menuInput = int(input("> "))
+def fightHandler(human: bool):
+    while True:
+        try:
+            p1 = int(input("\nP1 choose your character? e.g. 2 for Bette > ")) - 1
+            if human == True:
+                p2 = int(input("\nP2 choose your character? e.g. 15 for Tina > ")) - 1
+            else:
+                p2 = random.randint(0, len(listOfCards))
+            stat = int(input("\nStat? e.g. 1 for lesbianism > ")) - 1
+            winner = fight(p1, p2, stat)
+            return winner
+        except IndexError:
+            print("\nInput must a number on the list")
+            continue
+        except ValueError:
+            print("\nInput must be a number e.g. 1 or 2")
+            continue
 
-# printCards()
-# addCard()
+
+def printMainMenu():
+    title = "🌟 Top Trumps 🌟"
+    text = "Welcome to the Top Trumps 'Craziest Character in The L Word' Simulator"
+    menu = "--- Main Menu ---\n1: Fight a friend!\n2: Fight the computer!\n3: Add a Card Character\n4: Exit"
+    print(f"{title:^70}")
+    print(f"{text:^70}\n")
+    print(f"{menu}")
 
 
-counter1 = 0
-counter2 = 0
 while True:
-    printCards()
-    printStats()
-    x = int(input("Card 1? > ")) - 1
-    y = int(input("Card 2? > ")) - 1
-    z = int(input("Stat? > ")) - 1
+    listOfCards = list(cards.items())
+    listOfStats = list(listOfCards[0][1])
+    counter1 = 0
+    counter2 = 0
+    winner = 0
 
-    try:
-        winner = fight(x, y, z)
-    except IndexError:
-        print("Choose from the following Character:")
-        printCards()
-        print("Choose from the following Stats:")
-        printStats()
+    os.system("clear")
+    printMainMenu()
+    menuInput = (input("> ")).strip()
 
-    if winner == 1:
-        counter1 += 1
-    elif winner == 2:
-        counter2 += 1
-    else:
+    if menuInput == "1":
+        while True:
+            os.system("clear")
+            print("--- Fight a friend ---\nChoose from the following Character:")
+            printCards()
+            print("Choose from the following Stats:")
+            printStats()
+            winner = fightHandler(True)
+            if winner == 1:
+                counter1 += 1
+            elif winner == 2:
+                counter2 += 1
+            else:
+                pass
+
+            time.sleep(1)
+            print(f"Score Player 1: {counter1}\nScore Player 2: {counter2}")
+            time.sleep(1)
+            againInput = input(
+                "\nPlay again or go back to Main Menu?\n1: Play again.\n2: Main menu.\n> "
+            )
+            if againInput == "1":
+                continue
+            else:
+                break
+
+    elif menuInput == "2":
+        while True:
+            os.system("clear")
+            print("--- Fight the computer ---\nChoose from the following Character:")
+            printCards()
+            print("Choose from the following Stats:")
+            printStats()
+            winner = fightHandler(False)
+            if winner == 1:
+                counter1 += 1
+            elif winner == 2:
+                counter2 += 1
+            else:
+                pass
+
+            time.sleep(1)
+            print(f"Score Player 1: {counter1}\nScore Player 2: {counter2}")
+            time.sleep(1)
+            againInput = input(
+                "\nPlay again or go back to Main Menu?\n1: Play again.\n2: Main menu.\n> "
+            )
+            if againInput == "1":
+                continue
+            else:
+                break
+
+    elif menuInput == "3":
+        os.system("clear")
+        print("--- Fight the computer ---\n")
+        addCard()
+        time.sleep(2)
         continue
-
-    print(f"Score Player 1: {counter1}")
-    print(f"Score Player 2: {counter2}")
-
-    playAgain = input("Again?: y/n > ").strip().lower()
-    if playAgain[0] == "y":
-        continue
-    else:
+    elif menuInput == "4":
         break
-
-# card1 = listOfCards[x][0]
-# card2 = listOfCards[y][0]
-# stat = listOfStats[z]
-
-# print(f"{card1} vs {card2}")
-# print(stat)
-
-# c1Stat = cards[card1][stat]
-# c2Stat = cards[card2][stat]
-
-# print(f"{card1.capitalize()} has a {stat} of {c1Stat}")
-# print(f"{card2.capitalize()} has a {stat} of {c2Stat}")
-
-# if c1Stat > c2Stat:
-#     print(f"{card1.capitalize()} wins!")
-# elif c1Stat < c2Stat:
-#     print(f"{card2.capitalize()} wins!")
-# else:
-#     print(f"It's a tie!")
+    else:
+        continue
