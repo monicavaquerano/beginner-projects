@@ -1,18 +1,46 @@
 """
-👉 Day 51 Challenge
-Remember the early days when all this was just lists?
+OS Library
 
-Good! Get back over to Day 45 and grab your to do list code. You'll need it today.
+👉 Day 55 Challenge
+Back the 'f' up everybody!
 
-Improve your to do list to add auto-save and auto-load.
+'f' is short for 'file', of course. What did you think I meant?
 
-That's it. Go get 'em, tiger!
+Get your minds out of the gutter, go back and get your auto save/load to do list from Day 51 and use it here.
 
-Code from Day 35
+Your program should:
+
+Create a backup folder.
+Create a random filename.
+Save a copy of the data to that file.
+This should all happen before the auto save.
+
+Hints:
+* Use a Boolean variable fileExists set to False to store whether the file has already been created.
+* Use if fileExists later on to check the status of the file before creating or writing.
+* Use the os.mkdir() function.
+
+# import os
+
+# List a file
+# os.listdir() # will allow you to list all the files:
+
+# Create a folder
+# os.mkdir("Hello") # Creates a folder called 'Hello'
+
+# Renames a file
+# os.rename("myname.txt", "new_name.txt")
+
+# Joins paths
+# os.path.join("Hello/","aFile.txt")
+
+# files = os.listdir()
+# if "quickSave.txt" not in files:
+#     print("Error: QuickSave not found")
 
 """
 
-import os, time
+import os, time, random
 
 myList = []
 
@@ -24,6 +52,32 @@ try:
 except FileNotFoundError as err:
     print(err)
     pass
+
+
+def saveList():
+    # BackUp Copy First
+    files = os.listdir()
+    if "55_BackUp" not in files:
+        os.mkdir("55_BackUp")
+
+    while True:
+        uniqueNumber = ""
+        for i in range(10):
+            uniqueNumber += str(random.randint(0, 9))
+
+        filename = os.path.join("55_BackUp", f"backup{uniqueNumber}.txt")
+        if filename not in os.listdir("55_BackUp"):
+            f = open(filename, "w")
+            f.write(str(myList))
+            f.close()
+            break
+        else:
+            continue
+
+    # Write File
+    f = open("toDoList.txt", "w")
+    f.write(str(myList))
+    f.close()
 
 
 def colorful(color, word):
@@ -83,16 +137,16 @@ while True:
     print(f"{title: ^35}")
     menu = (
         input(
-            f"\n{colorful('purple','View')}, {colorful('green','add')}, {colorful('red','remove')}, {colorful('blue','edit')} or {colorful('underline','delete all')}?: "
+            f"\n{colorful('purple','1: View')}, {colorful('green','2: Add')}, {colorful('red','3: Remove')}, {colorful('blue','4: Edit')} or {colorful('underline','5: delete all')}?: "
         )
         .lower()
         .strip()
     )
-    if menu == "view":
+    if menu == "1" or menu[0] == "v":
         printList(myList)
         time.sleep(5)
         os.system("clear")
-    elif menu == "add":
+    elif menu == "2" or menu[0] == "a":
         item = (
             input(f"\n{colorful('green','What should I add to the list?: ')}")
             .lower()
@@ -106,8 +160,9 @@ while True:
             myList.append(item)
             print(f"{colorful('green', 'The item was successfully added!')}")
             print("\033[?25l")
+            saveList()
             time.sleep(2)
-    elif menu == "remove":
+    elif menu == "3" or menu[0] == "r":
         item = (
             input(f"\n{colorful('red','What should I remove from the list?: ')}")
             .lower()
@@ -129,12 +184,13 @@ while True:
                 myList.remove(item)
                 print(f"{colorful('red', 'The item was successfully removed!')}")
                 print("\033[?25l")
+                saveList()
                 time.sleep(2)
             else:
                 print(f"{colorful('yellow', 'The item was not removed!')}")
                 print("\033[?25l")
                 time.sleep(2)
-    elif menu == "edit":
+    elif menu == "4" or menu[0] == "e":
         item = (
             input(f"\n{colorful('blue', 'What should I edit from the list?: ')}")
             .lower()
@@ -150,8 +206,9 @@ while True:
             myList[i] = newItem
             print(f"{colorful('blue', 'The item was successfully edited!')}")
             print("\033[?25l")
+            saveList()
             time.sleep(2)
-    elif menu == "delete all":
+    elif menu == "5" or menu[0] == "d":
         printList(myList)
         sure = (
             input(
@@ -164,6 +221,7 @@ while True:
             myList = []
             print(f"{colorful('underline', 'The list was successfully deleted!')}")
             print("\033[?25l")
+            saveList()
             time.sleep(2)
         else:
             print(f"{colorful('yellow', 'The list was not deleted.')}")
@@ -171,6 +229,3 @@ while True:
             time.sleep(2)
     else:
         continue
-    f = open("toDoList.txt", "w")
-    f.write(str(myList))
-    f.close()
