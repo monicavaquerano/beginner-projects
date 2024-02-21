@@ -52,16 +52,9 @@ def eventTimer():
         print(f"\n🎉🎉 {name_event} 🎉🎉 is today.")
 
 
-eventTimer()
+def main():
+    eventTimer()
 
 
-# myDate = datetime.date(year=2022, month=12, day=7)
-
-# today = datetime.date.today()
-# difference = datetime.timedelta(days=365)
-# # difference = datetime.timedelta(weeks=4)
-# newDate = today + difference
-
-# print(myDate)
-# print(today)
-# print(newDate)
+if __name__ == "__main__":
+    main()

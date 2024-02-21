@@ -17,12 +17,6 @@ def caesar(message, offset):
     print("encrypted text:", encrypted_text)
 
 
-caesar(text, shift)
-caesar(text, 13)
-
-custom_key = "python"
-
-
 def vigenere(message, key, direction=1):
     key_index = 0
     alphabet = "abcdefghijklmnopqrstuvwxyz"
@@ -61,15 +55,25 @@ def decrypt(message, key):
     return vigenere(message, key, -1)
 
 
-# encryption = encrypt(text, custom_key)
-# print(encryption)
-# decryption = decrypt(encryption, custom_key)
-# print(decryption)
+def main():
+    caesar(text, shift)
+    caesar(text, 13)
 
-text = "mrttaqrhknsw ih puggrur"
-custom_key = "happycoding"
+    custom_key = "python"
 
-print(f"\nEncrypted text: {text}")
-print(f"Key: {custom_key}")
-decryption = decrypt(text, custom_key)
-print(f"\nDecrypted text: {decryption}\n")
+    text = "mrttaqrhknsw ih puggrur"
+    custom_key = "happycoding"
+
+    encryption = encrypt(text, custom_key)
+    print(encryption)
+    decryption = decrypt(encryption, custom_key)
+    print(decryption)
+
+    print(f"\nEncrypted text: {text}")
+    print(f"Key: {custom_key}")
+    decryption = decrypt(text, custom_key)
+    print(f"\nDecrypted text: {decryption}\n")
+
+
+if __name__ == "__main__":
+    main()

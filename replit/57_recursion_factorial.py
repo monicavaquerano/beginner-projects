@@ -54,4 +54,9 @@ def factorialFinder():
     print(f"The factorial of {number} is {factorial(number)}")
 
 
-factorialFinder()
+def main():
+    factorialFinder()
+
+
+if __name__ == "__main__":
+    main()

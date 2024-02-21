@@ -33,23 +33,28 @@ def colorful(color, word):
     return word
 
 
-print(
-    colorful("bold", "Super Subroutine or function\n"),
-    "With my ",
-    colorful("purple", "new program "),
-    'I can just call red ("and") ',
-    colorful("red", "and "),
-    "that word will appear in the color I set it to.\n",
-    "With no ",
-    colorful("cyan", "weird gaps.\n"),
-    colorful("yellow", "Epic\n"),
-    colorful("faint", "TEST "),
-    colorful("negative", "TEST"),
-    sep="",
-)
-print(
-    colorful("red", "= MUSIC+ ="),
-    colorful("white", "="),
-    colorful("bold", "O"),
-    colorful("blink", "O"),
-)
+def main():
+    print(
+        colorful("bold", "Super Subroutine or function\n"),
+        "With my ",
+        colorful("purple", "new program "),
+        'I can just call red ("and") ',
+        colorful("red", "and "),
+        "that word will appear in the color I set it to.\n",
+        "With no ",
+        colorful("cyan", "weird gaps.\n"),
+        colorful("yellow", "Epic\n"),
+        colorful("faint", "TEST "),
+        colorful("negative", "TEST"),
+        sep="",
+    )
+    print(
+        colorful("red", "= MUSIC+ ="),
+        colorful("white", "="),
+        colorful("bold", "O"),
+        colorful("blink", "O"),
+    )
+
+
+if __name__ == "__main__":
+    main()

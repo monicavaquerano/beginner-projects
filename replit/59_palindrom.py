@@ -44,7 +44,7 @@ This is a tough one, so I've given you some hints about the algorithmic thinking
 """
 
 
-def is_Palindorm(string):
+def is_palindrom(string):
     base_string = ""
     for char in string.strip().lower():
         if not char.isalpha():
@@ -58,24 +58,29 @@ def is_Palindorm(string):
 
     if base_string == reversed_string:
         print(f"{string} is a palindrome. Yay!")
+        return True
     else:
         print(f"{string} is not a palindrome. :(")
-
-
-is_Palindorm("Race Car")
-is_Palindorm("A Man A Plan A Canal Panama!")
-is_Palindorm("Anona")
-is_Palindorm("Apopa")
-is_Palindorm("No soy un palindrome???")
-
-
-# Usando recursion
-def palindrome(word):
-    if len(word) <= 1:
-        return True
-    if word[0] != word[-1]:
         return False
-    return palindrome(word[1:-1])
 
 
-print(palindrome("racecar"))
+def main():
+    is_palindrom("Race Car")
+    is_palindrom("A Man A Plan A Canal Panama!")
+    is_palindrom("Anona")
+    is_palindrom("Apopa")
+    is_palindrom("No soy un palindrome???")
+
+    # Usando recursion
+    def palindrome(word):
+        if len(word) <= 1:
+            return True
+        if word[0] != word[-1]:
+            return False
+        return palindrome(word[1:-1])
+
+    print(palindrome("racecar"))
+
+
+if __name__ == "__main__":
+    main()
