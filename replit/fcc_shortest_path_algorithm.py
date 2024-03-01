@@ -1,13 +1,3 @@
-my_graph = {
-    "A": [("B", 5), ("C", 3), ("E", 11)],
-    "B": [("A", 5), ("C", 1), ("F", 2)],
-    "C": [("A", 3), ("B", 1), ("D", 1), ("E", 5)],
-    "D": [("C", 1), ("E", 9), ("F", 3)],
-    "E": [("A", 11), ("C", 5), ("D", 9)],
-    "F": [("B", 2), ("D", 3)],
-}
-
-
 def shortest_path(graph, start, target=""):
     unvisited = list(graph)
     distances = {node: 0 if node == start else float("inf") for node in graph}
@@ -37,5 +27,15 @@ def shortest_path(graph, start, target=""):
     return distances, paths
 
 
-shortest_path(my_graph, "A")
-shortest_path(my_graph, "A", "F")
+if __name__ == "__main__":
+    my_graph = {
+        "A": [("B", 5), ("C", 3), ("E", 11)],
+        "B": [("A", 5), ("C", 1), ("F", 2)],
+        "C": [("A", 3), ("B", 1), ("D", 1), ("E", 5)],
+        "D": [("C", 1), ("E", 9), ("F", 3)],
+        "E": [("A", 11), ("C", 5), ("D", 9)],
+        "F": [("B", 2), ("D", 3)],
+    }
+
+    shortest_path(my_graph, "A")
+    shortest_path(my_graph, "A", "F")
