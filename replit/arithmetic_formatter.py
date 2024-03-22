@@ -9,7 +9,6 @@ def arithmetic_arranger(problems, show_answers=False):
     second_row = []
     lines = []
     results = []
-    prueba = []
 
     if len(problems) > 5:
         return "Error: Too many problems."
