@@ -90,16 +90,16 @@ print(add_time("11:59 PM", "24:05", "Wednesday"))
 # Returns: '12:04 AM, Friday (2 days later)
 
 print(add_time("11:43 AM", "00:20"))
-# # Returns: 12:03 PM
+# Returns: 12:03 PM
 
 print(add_time("3:00 PM", "48:10"))
-# # Returns: 00:10 PM
+# Returns: 00:10 PM
 
 print(add_time("11:30 AM", "2:32", "Monday"))
-# # Returns: 2:02 PM, Monday
+# Returns: 2:02 PM, Monday
 
 print(add_time("11:43 PM", "24:20", "tueSday"))
-# # Returns: 12:03 AM, Thursday (2 days later)
+# Returns: 12:03 AM, Thursday (2 days later)
 
 print(add_time("6:30 PM", "205:12"))
 # Returns: 7:42 AM (9 days later)
