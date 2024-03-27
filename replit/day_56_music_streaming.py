@@ -58,7 +58,7 @@ special_char = [
 print("MUSIC SORTING SYSTEM")
 
 time.sleep(1)
-print("Your files are beeng sorted...")
+print("Your files are being sorted...")
 
 # Creates a folder for '56_Music_Striming'
 main_folder = "56_Music_Striming"
