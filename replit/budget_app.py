@@ -7,8 +7,6 @@ class Category:
         """
         A deposit method that accepts an amount and description.
         If no description is given, it should default to an empty string.
-        The method should append an object to the ledger list in the form of
-        {"amount": amount, "description": description}.
         """
         self.ledger.append({"amount": amount, "description": description})
 
@@ -16,9 +14,7 @@ class Category:
         """
         A withdraw method that is similar to the deposit method,
         but the amount passed in should be stored in the ledger
-        as a negative number. If there are not enough funds, nothing
-        should be added to the ledger. This method should return True
-        if the withdrawal took place, and False otherwise.
+        as a negative number.
         """
         if self.check_funds(amount):
             self.ledger.append({"amount": -abs(amount), "description": description})
@@ -36,10 +32,7 @@ class Category:
     def transfer(self, amount, other):
         """
         A transfer method that accepts an amount and another budget category as
-        arguments. The method should add a withdrawal with the amount and the
-        description "Transfer to [Destination Budget Category]".
-        The method should then add a deposit to the other budget category
-        with the amount and the description "Transfer from [Source Budget Category]". If there are not enough funds, nothing should be added to either ledgers. This method should return True if the transfer took place, and False otherwise.
+        arguments.
         """
         if self.check_funds(amount):
             other.deposit(amount, f"Transfer from {self.name}")
@@ -51,9 +44,6 @@ class Category:
     def check_funds(self, amount):
         """
         A check_funds method that accepts an amount as an argument.
-        It returns False if the amount is greater than the balance of the budget
-        category and returns True otherwise. This method should be used by both
-        the withdraw method and transfer method.
         """
         total = 0
 
@@ -66,10 +56,7 @@ class Category:
             return True
 
     def __str__(self) -> str:
-        asterics = (30 - len(self.name)) // 2 * "*"
-        title = f"{asterics}{self.name}{asterics}"
-        title = title if len(title) == 30 else title + "*"
-
+        title = f"{self.name:*^30}"
         balance = ""
         for transaction in self.ledger:
             description = transaction["description"]
@@ -85,24 +72,69 @@ class Category:
 
 
 def create_spend_chart(categories):
-    pass
+    if len(categories) > 4:
+        return "Too many categories"
+
+    chart_string = "Percentage spent by category\n"
+    minus_no = (len(categories) * 2) + 4
+    lower_line = f"{'': <4}{'-' * minus_no}\n"
+    max_length = max(len(category.name) for category in categories)
+
+    # Calculate the percentage spent for each category
+    spendings = [
+        sum(item["amount"] for item in category.ledger if item["amount"] < 0)
+        for category in categories
+    ]
+    total_spent = sum(spendings)
+    percentages = [int(spending / total_spent * 100) for spending in spendings]
+
+    # Categories percentages
+    for i in range(100, -1, -10):
+        line = str(i).rjust(3) + "| "
+        for j in range(len(percentages)):
+            if i <= percentages[j]:
+                # line += " " + "o" + " "
+                line += "o  "
+            else:
+                line += "   "
+        chart_string += f"{line}\n"
+
+    chart_string += lower_line
+
+    # Categories names
+    labels = []
+    for i in range(max_length):
+        label = "     "
+        for category in categories:
+            if i < len(category.name):
+                label += category.name[i] + "  "
+            else:
+                label += "   "
+        labels.append(label)
+    for label in labels:
+        if label == labels[-1]:
+            chart_string += f"{label}"
+        else:
+            chart_string += f"{label}\n"
+
+    return chart_string
 
 
-food = Category("Food")
-# food.deposit(1000, "deposit")
-# food.withdraw(10.15, "groceries")
-# food.withdraw(15.89, "restaurant and more food for dessert")
-# clothing = Category("Clothing")
-# food.transfer(50, clothing)
-# print(food)
-# print(clothing)
+if __name__ == "__main__":
+    # Test
+    food = Category("Food")
+    entertainment = Category("Entertainment")
+    business = Category("Business")
 
-"""
-Calling food.deposit(900, "deposit") and 
-food.withdraw(45.67, "milk, cereal, eggs, bacon, bread") 
-should return a balance of 854.33.
-"""
-food.deposit(900, "deposit")
-food.withdraw(45.67, "milk, cereal, eggs, bacon, bread")
-print(food)
-print(food.get_balance())
+    food.deposit(900, "deposit")
+    entertainment.deposit(900, "deposit")
+    business.deposit(900, "deposit")
+
+    food.withdraw(105.55)
+    entertainment.withdraw(33.40)
+    business.withdraw(10.99)
+
+    solution = "Percentage spent by category\n100|          \n 90|          \n 80|          \n 70|    o     \n 60|    o     \n 50|    o     \n 40|    o     \n 30|    o     \n 20|    o  o  \n 10|    o  o  \n  0| o  o  o  \n    ----------\n     B  F  E  \n     u  o  n  \n     s  o  t  \n     i  d  e  \n     n     r  \n     e     t  \n     s     a  \n     s     i  \n           n  \n           m  \n           e  \n           n  \n           t  "
+
+    print(solution)
+    print((create_spend_chart([business, food, entertainment])))
