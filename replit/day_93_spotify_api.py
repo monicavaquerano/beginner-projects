@@ -135,6 +135,3 @@ while True:
     elif choice[0] == "e":
         print(f"\n{'Bye':~^30}")
         break
-
-# print(data["tracks"]["items"][0]["track"].keys())
-# print(json.dumps(data, indent=2))
