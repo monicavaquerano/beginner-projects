@@ -24,21 +24,57 @@ import json, os, requests
 from dotenv import load_dotenv
 from requests.auth import HTTPBasicAuth
 
+# from openai import OpenAI
+
+# import openai
+
 # Load .env
 load_dotenv()
 
-# Spotify
-# Access secret keys
+
+# OpenAI
+# headers = {"Authorization": f"Bearer {OPENAI_API_KEY}"}
+# client = OpenAI(
+#     organization=ORGANIZATION_ID,
+# )
+
+# News Secret Keys
+NEWS_API_KEY = os.environ.get("NEWS_API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+ORGANIZATION_ID = os.environ.get("ORGANIZATION_ID")
+
+# country = "us"  # USA
+country = "mx"  # Mexico
+# country = "sv"  # El Salvador
+# country = "de"  # Deutschland
+
+news_url = (
+    f"https://newsapi.org/v2/top-headlines?country={country}&apiKey={NEWS_API_KEY}"
+)
+
+resuls = requests.get(news_url)
+data = resuls.json()
+
+for article in data["articles"]:
+    print(article["title"], end="\n")
+    print(article["url"], end="\n")
+    print(article["content"], end="\n")
+    print()
+
+print(json.dumps(data, indent=2))
+
+
+# Spotify Access Secret Keys
 clientID = os.environ.get("CLIENT_ID")
 clientSecret = os.environ.get("CLIENT_SECRET")
 
-url = "https://accounts.spotify.com/api/token"
+spotify_url = "https://accounts.spotify.com/api/token"
 
 # Get Authentication
 data = {"grant_type": "client_credentials"}
 auth = HTTPBasicAuth(clientID, clientSecret)
 
-response = requests.post(url, data=data, auth=auth)
+response = requests.post(spotify_url, data=data, auth=auth)
 accessToken = response.json()["access_token"]
 headers = {"Authorization": f"Bearer {accessToken}"}
 # print(response.ok)
@@ -92,13 +128,7 @@ def read_search(data):
         )
 
 
-# Top 50 Global
-def get_top_50():
-    fullURL = "https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF"
-    return fullURL
-
-
-while True:
+"""while True:
     title = f"{'Spotify API':~^30}"
     print(title)
     choice = (
@@ -144,60 +174,4 @@ while True:
     elif choice[0] == "e":
         print(f"\n{'Bye':~^30}")
         break
-
-
-# News and OpenAI
-"""
-import json, os, requests
-from dotenv import load_dotenv
-
-# from openai import OpenAI
-
-# import openai
-
-load_dotenv()
-
-# Secret Keys
-NEWS_API_KEY = os.environ.get("NEWS_API_KEY")
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-ORGANIZATION_ID = os.environ.get("ORGANIZATION_ID")
-
-
-headers = {"Authorization": f"Bearer {OPENAI_API_KEY}"}
-# client = OpenAI(
-#     organization=ORGANIZATION_ID,
-# )
-
-# country = "us"  # USA
-country = "mx"  # Mexico
-# country = "sv"  # El Salvador
-# country = "de"  # Deutschland
-
-url = f"https://newsapi.org/v2/top-headlines?country={country}&apiKey={NEWS_API_KEY}"
-
-resuls = requests.get(url)
-data = resuls.json()
-
-
-for article in data["articles"]:
-    print(article["title"], end="\n")
-    print(article["url"], end="\n")
-    print(article["content"], end="\n")
-    print()
-
-print(json.dumps(data, indent=2))
-
-# response = client.chat.completions.create(
-#     model="gpt-3.5-turbo-0125",
-#     response_format={"type": "json_object"},
-#     messages=[
-#         {
-#             "role": "system",
-#             "content": "You are a helpful assistant designed to output JSON.",
-#         },
-#         {"role": "user", "content": "Who won the world series in 2020?"},
-#     ],
-# )
-# print(response.choices[0].message.content)
-
 """
