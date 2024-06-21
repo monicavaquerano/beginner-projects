@@ -16,9 +16,13 @@ https://openai.com/
 https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 """
 
+# WIP - Se me venció la OpenAI access :(
+
+
 import json, os, requests
 from dotenv import load_dotenv
-from openai import OpenAI
+
+# from openai import OpenAI
 
 # import openai
 
